@@ -1,5 +1,5 @@
-#! /usr/bin/env python3 
-# -*- coding: utf-8 -*- 
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 import sys
 import urllib.request as uq
 import re
@@ -12,7 +12,7 @@ import chardet
 import requests
 import traceback
 
-path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) 
+path = os.path.dirname(os.path.abspath(__file__))
 print(path)
 today = str(datetime.date.today() - datetime.timedelta(days=1))
 
@@ -36,7 +36,7 @@ def get_data_from_url(url):
 def download_img(url):
     pic = requests.get(url,timeout=50) #超时异常判断 5秒超时
     if pic.status_code == 200:
-        file_name = "%simage/"%(path)+str(hash(url))+".jpg" #拼接图片名
+        file_name = "%s/image/"%(path)+str(hash(url))+".jpg" #拼接图片名
         #将图片存入本地
         fp = open(file_name,'wb')
         fp.write(pic.content) #写入图片
@@ -47,26 +47,26 @@ def download_img(url):
         return 0
 
 def format_opf_ncx(titles,image_names,subject):
-    with open('%stemplate/template.opf'%(path),'r',encoding='utf-8') as f:
+    with open('%s/template/template.opf'%(path),'r',encoding='utf-8') as f:
         template_opf = f.read()
     opf_template = jinja2.Template(template_opf)
-    with open('%stemplate/template.ncx'%(path),'r',encoding='utf-8') as f:
+    with open('%s/template/template.ncx'%(path),'r',encoding='utf-8') as f:
         template_ncx = f.read()
     ncx_template = jinja2.Template(template_ncx)
     image_names = set(image_names)
     opf_rend = opf_template.render({ 'titles':titles,'today':'%s'%(today),'which':subject,})
     ncx_rend = ncx_template.render({ 'titles':titles, })
-    with open("%sresult/%s.opf"%(path,today),'w',encoding='utf-8') as f:
+    with open("%s/result/%s.opf"%(path,today),'w',encoding='utf-8') as f:
         f.write(opf_rend)
-    with open("%sresult/KUG.ncx"%(path),'w',encoding='utf-8') as f:
+    with open("%s/result/KUG.ncx"%(path),'w',encoding='utf-8') as f:
         f.write(ncx_rend)
 #today = time.strftime('%-d %B %Y',time.localtime())
 #today = time.strftime('%Y-%m-%d',time.localtime())
 
 class GetData():
     def __init__(self,kvs):
-        delete_file('%sresult'%(path),['*.html','*.opf','*.ncx','*.mobi','*.mp3'])
-        delete_file('%simage'%(path),['*.jpg',])
+        delete_file('%s/result'%(path),['*.html','*.opf','*.ncx','*.mobi','*.mp3'])
+        delete_file('%s/image'%(path),['*.jpg',])
         self.html = get_data_from_url(kvs['url'])
         self.links = set(self.html.xpath(kvs['links_xpath']))
         self.page_title_xpath = kvs['page_title_xpath']
@@ -104,7 +104,7 @@ class GetData():
         6.把css文件链接加入到html内容里面
         7.把html写入result文件夹内保存
         '''
-        with open('%stemplate/template.html'%(path),'r',encoding='utf-8') as f:
+        with open('%s/template/template.html'%(path),'r',encoding='utf-8') as f:
             template_html = f.read()
         html_template = jinja2.Template(template_html)
         words =re.findall(r'[a-zA-Z\']+',' '.join(etree.HTML(context).xpath('.//text()')))
@@ -120,8 +120,8 @@ class GetData():
         html_rend = etree.tostring(html_tree)
         encode_type = chardet.detect(html_rend)['encoding']
         html_rend = html_rend.decode(encode_type,errors="ignore").replace('<head>','<head>\n <link rel="stylesheet" type="text/css" href="../template/style.css">')
-       
-        with open("%sresult/%s.html"%(path,title),'w',encoding='utf-8') as f_html:
+
+        with open("%s/result/%s.html"%(path,title),'w',encoding='utf-8') as f_html:
             f_html.write(html_rend)
             self.titles.append(title)
     def remove_useless_node(self,story_body,page_useless_xpath):
@@ -167,7 +167,7 @@ class GetData():
         mp3_url = html.xpath(self.page_mp3_xpath)[1]
         title = title.replace(' ','_')
        # title = re.sub(r'[^a-zA-Z0-9_.]','',title)
-        with open('%sresult/%s.mp3'%(path,title),'wb') as f:
+        with open('%s/result/%s.mp3'%(path,title),'wb') as f:
             f.write(requests.get(mp3_url).content)
     def get_page(self):
         for url in self.filter_links():
