@@ -5,6 +5,7 @@ from django.http import HttpResponse
 
 from . import database
 from .models import PageView
+from project.settings import DATABASES
 
 # Create your views here.
 
@@ -15,7 +16,8 @@ def index(request):
     return render(request, 'welcome/index.html', {
         'hostname': hostname,
         'database': database.info(),
-        'count': PageView.objects.count()
+        'count': PageView.objects.count(),
+        'database':DATABASES,
     })
 
 def health(request):
