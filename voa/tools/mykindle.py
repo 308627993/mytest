@@ -19,7 +19,7 @@ def main():
     get_data_new.main() # download the voa news
     html_files =[i for i in os.listdir('%s/result'%(path)) if re.findall(r'html',i)]
     if html_files:
-        order_makemobi = './kindlegen %s/result/*.opf'%(path)
+        order_makemobi = '%s/kindlegen %s/result/*.opf'%(path,path)
         doit(order_makemobi) # make mobi format ebook
         sendmail.send_mail() # send mail
         return 'send mail success!'
