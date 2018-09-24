@@ -11,37 +11,7 @@ def send_mail():
     mailserver = 'box374.bluehost.com:465'
     sender = 'ljy@luckylinjiayuan.cn'
     receivers =[
-            'mlabm1985@163.com',
-            '18550348986@163.com',
             '308627993@qq.com',
-            '874374721@qq.com',
-            '47772637@qq.com',
-            '542765129@qq.com',
-            '176943251@qq.com',
-            '331391128@qq.com',
-            'jffeng_cloud@hotmail.com',
-            'Frank_gao@bio-rad.com',
-            'magica1998@icloud.com',
-            'lulu991210@163.com',
-            '84186586@qq.com',
-            'songnaimei@gmail.com',
-            '904361038@qq.com',
-            'gaoran234@163.com',
-            '465961255@qq.com',
-            'worldbeaterma@my.com',
-            '1186507531@qq.com',
-            'abedino@163.com',
-            'wl_0232@163.com',
-            'qqcody@163.com',
-            'yingxu99@hotmail.com',
-            'liaobo19960618@foxmail.com',
-            'zhuanzhuyonggan@163.com',
-            'cf_data@163.com',
-            'doun@163.com',
-            'litianlun198809@163.com',
-            'G_daxia@yahoo.com',
-            'claudine_he@qq.com',
-            'jokic_ho@126.com',
             ]
    # receivers = receivers[-1:]
     today = datetime.date.today()
