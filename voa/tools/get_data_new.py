@@ -171,19 +171,19 @@ class GetData():
             f.write(requests.get(mp3_url).content)
     def get_page(self):
         for url in self.filter_links():
-            try:
-                html = get_data_from_url(url)
-                if self.filter_page(html):
-                    title = html.xpath(self.page_title_xpath)[0].strip()
-                    title = re.sub(r"[^a-zA-Z0-9_.' ]",'',title)
-                    self.download_mp3(html,title)
-                    story_body = html.xpath(self.page_body_xpath)[0]
-                    self.remove_useless_node(story_body,self.page_useless_xpath)
-                    context = self.download_format_image(story_body)
-                    self.download_format_page(title,context)
-            except Exception as e:
-                print(e)
-                traceback.print_exc()
+        #    try:
+            html = get_data_from_url(url)
+            if self.filter_page(html):
+                title = html.xpath(self.page_title_xpath)[0].strip()
+                title = re.sub(r"[^a-zA-Z0-9_.' ]",'',title)
+                self.download_mp3(html,title)
+                story_body = html.xpath(self.page_body_xpath)[0]
+                self.remove_useless_node(story_body,self.page_useless_xpath)
+                context = self.download_format_image(story_body)
+                self.download_format_page(title,context)
+        #    except Exception as e:
+        #        print(e)
+        #        traceback.print_exc()
                 #sys.exit(1)
 def main():
     voa_kvs_level_1 = {
