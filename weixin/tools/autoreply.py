@@ -45,7 +45,7 @@ def autoreply(request):
             elif content == 'show':
                 message = delete_or_show_file(path,filetypes=['*',],action='show')
             else:
-                message = 'Email格式不正确，请再次输入！'
+                message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
                 'toUser':toUser,
                 'fromUser':fromUser,
