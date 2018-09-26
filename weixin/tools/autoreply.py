@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 import jinja2
 from . import get_media_id,get_xml
-import re
+import re,os
 from weixin import models
 
 def delete_or_show_file(path,filetypes,action):
