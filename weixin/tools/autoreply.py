@@ -43,7 +43,7 @@ def autoreply(request):
                     models.Email.objects.create(user_email = email,user_id = FromUserName)
                     message = 'Email成功添加，保存时间[%s]'%(str(models.Email.objects.get(user_email=email).create_time)[:19])
             elif content == 'show':
-                message = delete_or_show_file(path,filetypes=['*.py',],action='show')
+                message = delete_or_show_file(path=path,filetypes=['*.py',],action='show')
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
