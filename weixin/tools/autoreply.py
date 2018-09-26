@@ -10,6 +10,7 @@ def delete_or_show_file(path,filetypes,action):
     for filetype in filetypes:
         files += glob.glob(os.path.join(path,filetype))
     if action == 'show':
+        print(files)
         return str(files)
     elif action == 'delete':
         for file in files:
