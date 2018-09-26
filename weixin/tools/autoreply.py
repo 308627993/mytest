@@ -1,9 +1,12 @@
 import xml.etree.ElementTree as ET
 import jinja2
 from . import get_media_id,get_xml
-import re,os
+import re
+import os,glob
 from weixin import models
 
+
+path = os.path.dirname(os.path.abspath(__file__))
 def delete_or_show_file(path,filetypes,action):
     '''删除指定目录下的指定类型的文件'''
     files = []
@@ -16,7 +19,7 @@ def delete_or_show_file(path,filetypes,action):
         for file in files:
             os.remove(file)
 
-path = os.path.dirname(os.path.abspath(__file__))
+
 
 def autoreply(request):
     try:
@@ -44,7 +47,7 @@ def autoreply(request):
                     models.Email.objects.create(user_email = email,user_id = FromUserName)
                     message = 'Email成功添加，保存时间[%s]'%(str(models.Email.objects.get(user_email=email).create_time)[:19])
             elif content == 'show':
-                message = path#delete_or_show_file(path=path,filetypes=['*.py',],action='show')
+                message = delete_or_show_file(path=path,filetypes=['*.py',],action='show')
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
