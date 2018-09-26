@@ -3,6 +3,20 @@ import jinja2
 from . import get_media_id,get_xml
 import re
 from weixin import models
+
+def delete_or_show_file(path,filetypes,action):
+    '''删除指定目录下的指定类型的文件'''
+    files = []
+    for filetype in filetypes:
+        files += glob.glob(os.path.join(path,filetype))
+    if action == 'show':
+        return files
+    elif action == 'delete':
+        for file in files:
+            os.remove(file)
+
+path = os.path.dirname(os.path.abspath(__file__))
+
 def autoreply(request):
     try:
         webData = request.body
@@ -28,6 +42,8 @@ def autoreply(request):
                 else:
                     models.Email.objects.create(user_email = email,user_id = FromUserName)
                     message = 'Email成功添加，保存时间[%s]'%(str(models.Email.objects.get(user_email=email).create_time)[:19])
+            elif content == 'show':
+                message = delete_or_show_file(path,filetypes=['*',],action='show')
             else:
                 message = 'Email格式不正确，请再次输入！'
             text_dict = {
