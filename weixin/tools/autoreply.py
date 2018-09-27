@@ -6,7 +6,7 @@ import os,glob
 from weixin import models
 
 
-path = os.path.dirname(os.path.abspath(__file__))
+path = '%s/result/'%(os.path.dirname(os.path.abspath(__file__)))
 def delete_or_show_file(path,filetypes,action):
     '''删除指定目录下的指定类型的文件'''
     files = []
