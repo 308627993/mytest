@@ -13,8 +13,8 @@ import requests
 import traceback
 
 path = os.path.dirname(os.path.abspath(__file__))
-print(path)
-today = str(datetime.date.today() - datetime.timedelta(days=1))
+def get_today():
+    return str(datetime.date.today() - datetime.timedelta(days=1))
 
 def delete_file(path,filetypes):
     '''删除指定目录下的指定类型的文件'''
@@ -54,14 +54,12 @@ def format_opf_ncx(titles,image_names,subject):
         template_ncx = f.read()
     ncx_template = jinja2.Template(template_ncx)
     image_names = set(image_names)
-    opf_rend = opf_template.render({ 'titles':titles,'today':'%s'%(today),'which':subject,})
+    opf_rend = opf_template.render({ 'titles':titles,'today':'%s'%(get_today()),'which':subject,})
     ncx_rend = ncx_template.render({ 'titles':titles, })
-    with open("%s/result/%s.opf"%(path,today),'w',encoding='utf-8') as f:
+    with open("%s/result/%s.opf"%(path,get_today()),'w',encoding='utf-8') as f:
         f.write(opf_rend)
     with open("%s/result/KUG.ncx"%(path),'w',encoding='utf-8') as f:
         f.write(ncx_rend)
-#today = time.strftime('%-d %B %Y',time.localtime())
-#today = time.strftime('%Y-%m-%d',time.localtime())
 
 class GetData():
     def __init__(self,kvs):
@@ -90,7 +88,7 @@ class GetData():
         '''
         根据自己设定的规则进行判定，返回输入的html是否符合要求
         '''
-        if today in html.xpath('.//time/@datetime')[0]:
+        if get_today() in html.xpath('.//time/@datetime')[0]:
             return True
         else:
             return False
@@ -108,7 +106,7 @@ class GetData():
             template_html = f.read()
         html_template = jinja2.Template(template_html)
         words =re.findall(r'[a-zA-Z\']+',' '.join(etree.HTML(context).xpath('.//text()')))
-        html_rend = html_template.render({ 'title':title,'page':context,'date':today,'subject':self.subject,'len_words':len(words)})
+        html_rend = html_template.render({ 'title':title,'page':context,'date':get_today(),'subject':self.subject,'len_words':len(words)})
         html_tree = etree.HTML(html_rend)
         node_list = html_tree.xpath(r'.//*[@*]')
         for node in node_list:

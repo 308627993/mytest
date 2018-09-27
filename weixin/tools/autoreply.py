@@ -50,6 +50,8 @@ def autoreply(request):
                 message = '%s--%s'%(path, delete_or_show_file(path=path,filetypes=['*.htm','*.html','*.mp3','*.mobi'],action='show'))
             elif content == 'delete':
                 delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
+            elif content == 'ebooks':
+                message = mykindle.main()
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
