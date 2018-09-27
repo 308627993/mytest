@@ -6,7 +6,6 @@ import os,re
 import datetime
 
 path = os.path.dirname(os.path.abspath(__file__))
-today = str(datetime.date.today() - datetime.timedelta(days=1))
 
 def doit(order):
     try:
