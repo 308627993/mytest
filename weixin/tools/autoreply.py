@@ -48,6 +48,8 @@ def autoreply(request):
                     message = 'Email成功添加，保存时间[%s]'%(str(models.Email.objects.get(user_email=email).create_time)[:19])
             elif content == 'show':
                 message = '%s--%s'%(path, delete_or_show_file(path=path,filetypes=['*.htm','*.html','*.mp3','*.mobi'],action='show'))
+            elif content == 'delete':
+                delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
