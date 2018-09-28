@@ -51,12 +51,9 @@ def autoreply(request):
             elif content == 'delete':
                 delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
             elif content == 'ebooks':
+                message = 'make mobi file and send mail start...'
                 from voa.tools import mykindle
-                try:
-                    mykindle.main()
-                    message = 'send mail success'
-                except:
-                    message = 'send mail fail'
+                mykindle.main()
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
