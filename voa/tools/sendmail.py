@@ -30,23 +30,24 @@ def send_mail():
         all_files = mobi_files + mp3_files
     else:
         all_files = []
-    for i in all_files:
-        f_path = os.path.join(dir,i)
-        with open(f_path,'rb') as f:
-            data = f.read()
-        file_msg = MIMEBase(maintype, subtype)
-        file_msg.set_payload(data)
-        email.encoders.encode_base64(file_msg)
-        basename = os.path.basename(i.strip())
-        file_msg.add_header('Content-Disposition','attachment', filename = basename)
-        main_msg.attach(file_msg)
-
-    # 设置根容器属性
-    main_msg['From'] = sender
-    main_msg['Subject'] = "%s voa news"%(today)
-    fullText = main_msg.as_string()
-    # 用smtp发送邮件
     if all_files:
+        for i in all_files:
+            f_path = os.path.join(dir,i)
+            with open(f_path,'rb') as f:
+                data = f.read()
+            file_msg = MIMEBase(maintype, subtype)
+            file_msg.set_payload(data)
+            email.encoders.encode_base64(file_msg)
+            basename = os.path.basename(i.strip())
+            file_msg.add_header('Content-Disposition','attachment', filename = basename)
+            main_msg.attach(file_msg)
+
+        # 设置根容器属性
+        main_msg['From'] = sender
+        main_msg['Subject'] = "%s voa news"%(today)
+        fullText = main_msg.as_string()
+        # 用smtp发送邮件
+
         try:
             n=0
             while n  < len(receivers):
