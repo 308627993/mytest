@@ -24,7 +24,12 @@ def send_mail():
     contype = 'application/octet-stream'
     maintype, subtype = contype.split('/', 1)
     dir = os.path.join(path,'result')
-    all_files = [i for i in os.listdir(dir) if re.findall(r'mobi|mp3',i)]
+    mobi_files = [i for i in os.listdir(dir) if re.findall(r'mobi',i)]
+    mp3_files = [i for i in os.listdir(dir) if re.findall(r'mp3',i)]
+    if (mobi_files and mp3_files) :
+        all_files = mobi_files + mp3_files
+    else:
+        all_files = []
     for i in all_files:
         f_path = os.path.join(dir,i)
         with open(f_path,'rb') as f:
@@ -41,14 +46,15 @@ def send_mail():
     main_msg['Subject'] = "%s voa news"%(today)
     fullText = main_msg.as_string()
     # 用smtp发送邮件
-    try:
-        n=0
-        while n  < len(receivers):
-            smtp_server.sendmail(sender,receivers[n:n+10], fullText)
-            n+=10
-            print('send mail to %s success !'%n)
-    finally:
-        smtp_server.quit()
+    if all_files:
+        try:
+            n=0
+            while n  < len(receivers):
+                smtp_server.sendmail(sender,receivers[n:n+10], fullText)
+                n+=10
+                print('send mail to %s success !'%n)
+        finally:
+            smtp_server.quit()
 
 if __name__=='__main__':
     send_mail()

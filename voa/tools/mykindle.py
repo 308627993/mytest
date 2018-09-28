@@ -20,7 +20,7 @@ def main():
     if html_files:
         order_makemobi = '%s/kindlegen %s/result/*.opf'%(path,path)
         doit(order_makemobi) # make mobi format ebook
-        time.sleep(10) # 休眠1秒
+        time.sleep(15) # 休眠15秒
         sendmail.send_mail() # send mail
         return 'send mail success!'
     else:
