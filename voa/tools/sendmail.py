@@ -7,6 +7,7 @@ import os
 import re
 import email
 from weixin.models import Email
+import time
 
 path =os.path.dirname(os.path.abspath(__file__))
 def send_mail():
@@ -51,9 +52,10 @@ def send_mail():
         try:
             n=0
             while n  < len(receivers):
-                smtp_server.sendmail(sender,receivers[n:n+10], fullText)
-                n+=10
-                print('send mail to %s success !'%n)
+                smtp_server.sendmail(sender,receivers[n:n+100], fullText)
+                n+=100
+                if n<len(receivers):
+                    time.sleep(3700)
         finally:
             smtp_server.quit()
 
