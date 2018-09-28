@@ -12,8 +12,8 @@ path =os.path.dirname(os.path.abspath(__file__))
 def send_mail():
     mailserver = 'box374.bluehost.com:465'
     sender = 'ljy@luckylinjiayuan.cn'
-    receivers =[i.user_email for i in Email.objects.all()]
-    #receivers = ['zahuotang@163.com','308627993@qq.com']
+    #receivers =[i.user_email for i in Email.objects.all()]
+    receivers = ['zahuotang@163.com','308627993@qq.com']
     today = datetime.date.today()
     smtp_server = smtplib.SMTP_SSL(mailserver)
     smtp_server.login(sender,'samsung@00')
