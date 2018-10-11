@@ -51,11 +51,12 @@ def autoreply(request):
             elif content == 'delete':
                 delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
             elif content == 'ebooks':
-                import subprocess
-                message = 'make mobi file and send mail start...'
+                import subprocess,sys
+                message = sys.path#'make mobi file and send mail start...'
                 #from voa.tools import mykindle
                 #mykindle.main()
-                subprocess.Popen(['python','../../../voa/tools/mykindle.py'],shell=True)
+                #subprocess.Popen(['python','../../../voa/tools/mykindle.py'],shell=True)
+
             elif content == 'mails':
                 from weixin.models import Email
                 message = 'mails total %s EA'%(len(Email.objects.all()))
