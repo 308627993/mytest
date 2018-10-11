@@ -52,7 +52,8 @@ def autoreply(request):
                 delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
             elif content == 'ebooks':
                 import subprocess,sys
-                message = sys.path#'make mobi file and send mail start...'
+                s= subprocess.Popen('which python',shell=True,stdout=subprocess.PIPE)
+                message = s.stdout.read()
                 #from voa.tools import mykindle
                 #mykindle.main()
                 #subprocess.Popen(['python','../../../voa/tools/mykindle.py'],shell=True)
