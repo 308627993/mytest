@@ -56,7 +56,7 @@ def autoreply(request):
                 message = s.stdout.read()
                 #from voa.tools import mykindle
                 #mykindle.main()
-                #subprocess.Popen(['python','../../../voa/tools/mykindle.py'],shell=True)
+                subprocess.Popen(['/opt/app-root/bin/python','../../../voa/tools/mykindle.py'],shell=True)
 
             elif content == 'mails':
                 from weixin.models import Email
