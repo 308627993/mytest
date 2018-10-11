@@ -55,7 +55,7 @@ def autoreply(request):
                 message = 'make mobi file and send mail start...'
                 #from voa.tools import mykindle
                 #mykindle.main()
-                subprocess.Popen(['python ../../../voa/tools/mykindle.py &'])
+                subprocess.Popen(['python','../../../voa/tools/mykindle.py'],shell=True)
             elif content == 'mails':
                 from weixin.models import Email
                 message = 'mails total %s EA'%(len(Email.objects.all()))
