@@ -59,7 +59,7 @@ def autoreply(request):
                 #from voa.tools import mykindle
                 #mykindle.main()
             elif content == 'log':
-                message = '%s--%s'%(path, delete_or_show_file(path='%s/weixin/management/commands'%django_root_path,filetypes=['*.txt','*.py'],action='show'))
+                message = '%s--%s'%(path, delete_or_show_file(path='%s/weixin/management/commands/voa'%django_root_path,filetypes=['*.txt','*.py'],action='show'))
                 #with open('%s/weixin/management/commands/log.txt'%django_root_path,'r') as f:
                 #    message = f.read()
 

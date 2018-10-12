@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 log = 'send mail fail!'
         else:
             log = 'there is no html files'
-        with open('log.txt','w') as f:
+        with open('%s/voa/log.txt'%path,'w') as f:
             log += '---%s'%datetime.date.today()
             print(log)
             f.write(log)
