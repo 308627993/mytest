@@ -6,7 +6,7 @@ import smtplib
 import os
 import re
 import email
-from ../../../models import Email
+from weixin.models import Email
 import time
 
 path =os.path.dirname(os.path.abspath(__file__))

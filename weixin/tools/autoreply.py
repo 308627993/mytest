@@ -53,9 +53,9 @@ def autoreply(request):
             elif content == 'ebooks':
                 import subprocess,sys
                 #s= subprocess.Popen('which python3',shell=True,stdout=subprocess.PIPE)
-                s = subprocess.Popen('python3 /opt/app-root/src/weixin/tools/voa/mykindle.py',shell=True)
+                subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle',shell=True)
                 #s = subprocess.Popen('which python3',shell=True)
-                message = s.stdout.read()
+                message = 'start make mobi format ebooks'
                 #from voa.tools import mykindle
                 #mykindle.main()
 
