@@ -17,7 +17,7 @@ class Command(BaseCommand):
         get_data_new.main() # download the voa news
         html_files =[i for i in os.listdir('%s/voa/result'%(path)) if re.findall(r'html',i)]
         if html_files:
-            order_makemobi = '%s/kindlegen %s/result/*.opf'%(path,path)
+            order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
             doit(order_makemobi) # make mobi format ebook
             time.sleep(15) # 休眠15秒
             sendmail.send_mail() # send mail
