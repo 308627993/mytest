@@ -53,7 +53,7 @@ def autoreply(request):
             elif content == 'ebooks':
                 import subprocess,sys
                 #s= subprocess.Popen('which python3',shell=True,stdout=subprocess.PIPE)
-                s = subprocess.Popen('python','../../../voa/tools/mykindle.py'],shell=True)
+                s = subprocess.Popen('python ../../../voa/tools/mykindle.py',shell=True)
                 message = s.stdout.read()
                 #from voa.tools import mykindle
                 #mykindle.main()
