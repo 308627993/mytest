@@ -16,11 +16,18 @@ class Command(BaseCommand):
                 pass
         get_data_new.main() # download the voa news
         html_files =[i for i in os.listdir('%s/voa/result'%(path)) if re.findall(r'html',i)]
+        log = ''
         if html_files:
-            order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
-            doit(order_makemobi) # make mobi format ebook
-            time.sleep(15) # 休眠15秒
-            sendmail.send_mail() # send mail
-            return 'send mail success!'
+            try:
+                order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
+                doit(order_makemobi) # make mobi format ebook
+                time.sleep(15) # 休眠15秒
+                sendmail.send_mail() # send mail
+                log = 'send mail success!'
+            except:
+                log = 'send mail fail!'
         else:
-            return 'there is no html files'
+            log = 'there is no html files'
+        with open('log.txt','w') as f:
+            log += '---%s'%datetime.date.today()
+            f.write(log)

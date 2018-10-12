@@ -5,8 +5,8 @@ import re
 import os,glob
 from weixin import models
 
-
-path = '%s/management/commands/voa/result'%(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+django_root_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+path = '%s/weixin/management/commands/voa/result'%django_root_path
 def delete_or_show_file(path,filetypes,action):
     '''删除指定目录下的指定类型的文件'''
     files = []
@@ -58,7 +58,9 @@ def autoreply(request):
                 message = 'start make mobi format ebooks'
                 #from voa.tools import mykindle
                 #mykindle.main()
-
+            elif content == 'log':
+                with open('%s/weixin/management/commands/log.txt','r') as f:
+                    message = f.read()
 
             elif content == 'mails':
                 from weixin.models import Email
