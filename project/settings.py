@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'welcome',
     'weixin',
-    'voa',
 ]
 
 MIDDLEWARE = [
