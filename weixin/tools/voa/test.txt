@@ -1,0 +1,14 @@
+./
+../
+__pycache__/
+bbcnews.py
+mp3/
+mykindle.py
+python-3.6.3-docs.epub
+result/
+sendmail.py
+template/
+test.txt
+voanews.py
+voaresult/
+youtube/

@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'^health$', health),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^weixin/', include('weixin.urls')),
-    url(r'^voa/', include('voa.urls')),
 ]
 
 if settings.DEBUG:
