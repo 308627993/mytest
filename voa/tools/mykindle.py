@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import sendmail,get_data_new
+from . import sendmail,get_data_new
 import subprocess
 import os,re
 import datetime

@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 import jinja2
-import get_media_id,get_xml
+from . import get_media_id,get_xml
 import re
 import os,glob
 from weixin import models
