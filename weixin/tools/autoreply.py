@@ -59,7 +59,7 @@ def autoreply(request):
                 #from voa.tools import mykindle
                 #mykindle.main()
             elif content == 'log':
-                with open('%s/weixin/management/commands/log.txt','r') as f:
+                with open('%s/weixin/management/commands/log.txt'%django_root_path,'r') as f:
                     message = f.read()
 
             elif content == 'mails':
