@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from . import sendmail,get_data_new
+#from . import sendmail,get_data_new
+from /opt/app-root/src/voa/tools import sendmail,get_data_new
 import subprocess
 import os,re
 import datetime
