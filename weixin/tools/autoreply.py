@@ -6,7 +6,7 @@ import os,glob
 from weixin import models
 
 
-path = '%s/voa/tools/result'%(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+path = '%s/management/commands/voa/result'%(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def delete_or_show_file(path,filetypes,action):
     '''删除指定目录下的指定类型的文件'''
     files = []
