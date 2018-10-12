@@ -24,10 +24,13 @@ class Command(BaseCommand):
                 time.sleep(15) # 休眠15秒
                 sendmail.send_mail() # send mail
                 log = 'send mail success!'
+                print(log)
             except:
                 log = 'send mail fail!'
         else:
             log = 'there is no html files'
         with open('log.txt','w') as f:
             log += '---%s'%datetime.date.today()
+            print(log)
             f.write(log)
+        return log
