@@ -4,9 +4,11 @@ import subprocess
 import os,re
 import datetime
 import time
+import threading
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        '''
         path = os.path.dirname(os.path.abspath(__file__))
         def doit(order):
             try:
@@ -34,3 +36,10 @@ class Command(BaseCommand):
             print(log)
             f.write(log)
         return log
+        '''
+        def job():
+            with open('%s/voa/log.txt'%path,'w') as f:
+                f.write('---%s/n'%datetime.datetime.now())
+                timer = threading.Timer(3,job)
+                timer.start()
+        job()
