@@ -38,6 +38,7 @@ class Command(BaseCommand):
         return log
         '''
         def job():
+            path = os.path.dirname(os.path.abspath(__file__))
             with open('%s/voa/log.txt'%path,'w') as f:
                 f.write('---%s/n'%datetime.datetime.now())
                 timer = threading.Timer(3,job)
