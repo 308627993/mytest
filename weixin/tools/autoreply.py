@@ -38,7 +38,7 @@ def autoreply(request):
             xml_template = jinja2.Template(xml)
             content = xmlData.find('Content').text
             emailRegex = re.compile(r"^[-\w\.]{1,63}@[-\w]{2,63}\.[a-zA-Z]{2,6}$")
-            emails = emailRegex.findall(content)
+            emails = emailRegex.findall(content.strip())
             if emails:
                 email = emails[0]
                 if models.Email.objects.filter(user_email=email):
