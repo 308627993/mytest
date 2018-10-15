@@ -62,10 +62,23 @@ def autoreply(request):
                 #message = '%s--%s'%(path, delete_or_show_file(path='%s/weixin/management/commands/voa'%django_root_path,filetypes=['*.txt','*.py'],action='show'))
                 with open('%s/weixin/management/commands/voa/log.txt'%django_root_path,'r') as f:
                     message = f.read()
-
             elif content == 'mails':
                 from weixin.models import Email
                 message = 'mails total %s EA'%(len(Email.objects.all()))
+            elif 'remove' in content:
+                mails = emailRegex.findall(content.replace('remove','').strip()):
+                if mails:
+                    remove_mail = Email.objects.filter(user_email = mails[0])
+                    if len(remove_mail)==1:
+                        try:
+                            remove_mail[0].delete()
+                            message = '%s 成功从数据库中删除！'%mails[0]
+                        except:
+                            message = '%s 从数据库中删除失败，请联系管理员确认问题点！'%mails[0]
+                    else:
+                        message = '%s 不在数据库中，不需要删除！'%mails[0]
+                else:
+                    message = '请正确的输入你需要删除的邮箱！'
             else:
                 message = '%s不是正确的Email格式，请再次输入！'%content
             text_dict = {
