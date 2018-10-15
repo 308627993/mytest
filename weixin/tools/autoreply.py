@@ -66,7 +66,7 @@ def autoreply(request):
                 from weixin.models import Email
                 message = 'mails total %s EA'%(len(Email.objects.all()))
             elif 'remove' in content:
-                mails = emailRegex.findall(content.replace('remove','').strip()):
+                mails = emailRegex.findall(content.replace('remove','').strip())
                 if mails:
                     remove_mail = Email.objects.filter(user_email = mails[0])
                     if len(remove_mail)==1:
