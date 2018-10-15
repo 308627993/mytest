@@ -69,7 +69,8 @@ def autoreply(request):
                 mails = emailRegex.findall(content.replace('remove','').strip())
                 print(mails)
                 if mails:
-                    remove_mail = Email.objects.filter(user_email = mails[0])
+                    print(mails[0])
+                    remove_mail = models.Email.objects.filter(user_email = mails[0])
                     print(remove_mail)
                     if len(remove_mail)==1:
                         print(remove_mail[0])
