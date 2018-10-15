@@ -67,9 +67,12 @@ def autoreply(request):
                 message = 'mails total %s EA'%(len(Email.objects.all()))
             elif 'remove' in content:
                 mails = emailRegex.findall(content.replace('remove','').strip())
+                print(mails)
                 if mails:
                     remove_mail = Email.objects.filter(user_email = mails[0])
+                    print(remove_mail)
                     if len(remove_mail)==1:
+                        print(remove_mail[0])
                         try:
                             remove_mail[0].delete()
                             message = '%s 成功从数据库中删除！'%mails[0]
