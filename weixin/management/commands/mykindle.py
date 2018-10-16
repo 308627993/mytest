@@ -8,7 +8,7 @@ import threading
 
 class Command(BaseCommand):
     def add_arguments(self,parser):
-        parser.add_argument('public_or_private',nargs='+',type=string)
+        parser.add_argument('public_or_private',nargs='+',type=str)
     def handle(self, *args, **options):
         def everyday_job():
             path = os.path.dirname(os.path.abspath(__file__))
