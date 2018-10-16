@@ -7,6 +7,8 @@ import time
 import threading
 
 class Command(BaseCommand):
+    def add_arguments(self,parser):
+        parser.add_argument('public_or_private',nargs='+',type=string)
     def handle(self, *args, **options):
         def everyday_job():
             path = os.path.dirname(os.path.abspath(__file__))
@@ -24,10 +26,10 @@ class Command(BaseCommand):
                     order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
                     doit(order_makemobi) # make mobi format ebook
                     time.sleep(15) # 休眠15秒
-                    if 'public' in args:
+                    if 'public' in options['public_or_private']:
                         sendmail.send_mail('public') # send mail
                         log = 'send mail public success!'
-                    elif 'private' in args:
+                    elif 'private' in options['public_or_private']:
                         sendmail.send_mail('private') # send mail
                         log = 'send mail private success!'
                 except:
@@ -38,7 +40,7 @@ class Command(BaseCommand):
                 log += '---%s'%datetime.datetime.now()
                 print(log)
                 f.write(log)
-            if 'public' in args:
+            if 'public' in options['public_or_private']:
                 timer = threading.Timer(24*3600,everyday_job) #每天执行一次
-                timer.start()            
+                timer.start()
         everyday_job()
