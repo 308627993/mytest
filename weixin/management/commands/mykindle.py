@@ -24,8 +24,12 @@ class Command(BaseCommand):
                     order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
                     doit(order_makemobi) # make mobi format ebook
                     time.sleep(15) # 休眠15秒
-                    sendmail.send_mail() # send mail
-                    log = 'send mail success!'
+                    if 'public' in args:
+                        sendmail.send_mail('public') # send mail
+                        log = 'send mail public success!'
+                    elif 'private' in args:
+                        sendmail.send_mail('private') # send mail
+                        log = 'send mail private success!'
                 except:
                     log = 'send mail fail!'
             else:
@@ -34,6 +38,7 @@ class Command(BaseCommand):
                 log += '---%s'%datetime.datetime.now()
                 print(log)
                 f.write(log)
-            timer = threading.Timer(24*3600,everyday_job) #每天执行一次
-            timer.start()
+            if 'public' in args:
+                timer = threading.Timer(24*3600,everyday_job) #每天执行一次
+                timer.start()            
         everyday_job()

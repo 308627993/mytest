@@ -50,14 +50,15 @@ def autoreply(request):
                 message = '%s--%s'%(path, delete_or_show_file(path=path,filetypes=['*.htm','*.html','*.mp3','*.mobi'],action='show'))
             elif content == 'delete':
                 delete_or_show_file(path=path,filetypes=['*.html','*.mp3','*.mobi'],action='delete')
-            elif content == 'ebooks':
+            elif 'ebooks' in content:
                 import subprocess,sys
                 #s= subprocess.Popen('which python3',shell=True,stdout=subprocess.PIPE)
-                subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle',shell=True)
-                #s = subprocess.Popen('which python3',shell=True)
-                message = 'start make mobi format ebooks'
-                #from voa.tools import mykindle
-                #mykindle.main()
+                if 'public' in content:
+                    subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle public',shell=True)
+                    message = 'start make mobi format ebooks for public'
+                elif 'private' in content:
+                    subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle private',shell=True)
+                    message = 'start make mobi format ebooks for private'
             elif content == 'log':
                 #message = '%s--%s'%(path, delete_or_show_file(path='%s/weixin/management/commands/voa'%django_root_path,filetypes=['*.txt','*.py'],action='show'))
                 with open('%s/weixin/management/commands/voa/log.txt'%django_root_path,'r') as f:
