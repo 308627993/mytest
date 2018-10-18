@@ -54,10 +54,10 @@ def autoreply(request):
                 import subprocess,sys
                 #s= subprocess.Popen('which python3',shell=True,stdout=subprocess.PIPE)
                 if 'public' in content:
-                    subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle public',shell=True)
+                    subprocess.Popen('python3 /opt/app-root/src/manage.py public_kindle',shell=True)
                     message = 'start make mobi format ebooks for public'
                 elif 'private' in content:
-                    subprocess.Popen('python3 /opt/app-root/src/manage.py mykindle private',shell=True)
+                    subprocess.Popen('python3 /opt/app-root/src/manage.py private_kindle',shell=True)
                     message = 'start make mobi format ebooks for private'
             elif content == 'log':
                 #message = '%s--%s'%(path, delete_or_show_file(path='%s/weixin/management/commands/voa'%django_root_path,filetypes=['*.txt','*.py'],action='show'))
