@@ -32,6 +32,3 @@ def weixin_main(request):
     else:
         othercontent = tools.autoreply.autoreply(request)
         return HttpResponse(othercontent)
-
-def health(request):
-    return HttpResponse(Email.objects.count())
