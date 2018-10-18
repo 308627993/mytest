@@ -5,8 +5,9 @@ from django.utils.encoding import smart_str
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from . import tools
-def show(request):
-    return HttpResponse(r)
+from .models import Email
+#def show(request):
+#    return HttpResponse(r)
 #django默认开启csrf防护，这里使用@csrf_exempt去掉防护
 @csrf_exempt
 def weixin_main(request):
@@ -31,3 +32,6 @@ def weixin_main(request):
     else:
         othercontent = tools.autoreply.autoreply(request)
         return HttpResponse(othercontent)
+
+def helath(request):
+    return HttpResponse(Email.objects.count())
