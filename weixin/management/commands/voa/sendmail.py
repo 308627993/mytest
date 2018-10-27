@@ -8,6 +8,7 @@ import re
 import email
 from weixin.models import Email
 import time
+import threading
 
 path =os.path.dirname(os.path.abspath(__file__))
 def send_mail(public_or_private='private'):
