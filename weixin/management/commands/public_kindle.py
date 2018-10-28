@@ -38,4 +38,13 @@ class Command(BaseCommand):
             remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
             timer = threading.Timer(remain_seconds,everyday_job) #每天执行一次
             timer.start()
-        everyday_job()
+        today = datetime.date.today()
+        today_remain_seconds = (datetime.datetime(today.year,today.month,today.day,18,10)-datetime.datetime.now()).total_seconds()
+        if today_remain_seconds > 0:
+            start_timer = threading.Timer(today_remain_seconds,everyday_job)
+            start_timer.start()
+            return '%s hours latter will start job'%today_remain_seconds/3600
+        else:
+            start_timer = threading.Timer(today_remain_seconds + 24*3600,everyday_job)
+            start_timer.start()
+            return '%s hours latter will start job'%(today_remain_seconds/3600 +24)

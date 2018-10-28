@@ -54,8 +54,8 @@ def autoreply(request):
                 import subprocess,sys
                 #s= subprocess.Popen('which python3',shell=True,stdout=subprocess.PIPE)
                 if 'public' in content:
-                    subprocess.Popen('python3 /opt/app-root/src/manage.py public_kindle',shell=True)
-                    message = 'start make mobi format ebooks for public'
+                    remain_hours = subprocess.Popen('python3 /opt/app-root/src/manage.py public_kindle',shell=True,stdout=subprocess.PIPE)
+                    message = '%s ,start make mobi format ebooks for public'%remain_hours
                 elif 'private' in content:
                     subprocess.Popen('python3 /opt/app-root/src/manage.py private_kindle',shell=True)
                     message = 'start make mobi format ebooks for private'
