@@ -34,9 +34,9 @@ class Command(BaseCommand):
                 log += '---%s'%datetime.datetime.now()
                 print(log)
                 f.write(log)
-            tomorrow = (datetime.date.today()+datetime.timedelta(days=1))
-            remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
-            timer = threading.Timer(remain_seconds,everyday_job) #每天执行一次
+            #tomorrow = (datetime.date.today()+datetime.timedelta(days=1))
+            #remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
+            timer = threading.Timer(3600*24,everyday_job) #每天执行一次
             timer.start()
         everyday_job()
         '''
