@@ -27,7 +27,7 @@ class Command(BaseCommand):
                     sendmail.send_mail('public') # send mail
                     log += 'send mail public success!'
                 except Exception as e:#, Argment:
-                    log += 'send mail fail!Exception:%s'%e
+                    log += 'send mail fail!'
             else:
                 log += 'there is no html files,can not make mobi file'
             with open('%s/voa/log.txt'%path,'w') as f:
