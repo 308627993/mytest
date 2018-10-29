@@ -1,4 +1,3 @@
-
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart,MIMEBase
 import datetime
@@ -6,18 +5,12 @@ import smtplib
 import os
 import re
 import email
-from weixin.models import Email
 import time
-import threading
 
 path =os.path.dirname(os.path.abspath(__file__))
-def send_mail(public_or_private='private'):
+def send_mail(receivers):
     mailserver = 'box374.bluehost.com:465'
     sender = 'ljy@luckylinjiayuan.cn'
-    if public_or_private == 'public':
-        receivers =[i.user_email for i in Email.objects.all()]
-    else:
-        receivers = ['zahuotang@163.com','308627993@qq.com']
     today = datetime.date.today()
     smtp_server = smtplib.SMTP_SSL(mailserver)
     smtp_server.login(sender,'samsung@00')
@@ -45,22 +38,14 @@ def send_mail(public_or_private='private'):
             basename = os.path.basename(i.strip())
             file_msg.add_header('Content-Disposition','attachment', filename = basename)
             main_msg.attach(file_msg)
-
         # 设置根容器属性
         main_msg['From'] = sender
         main_msg['Subject'] = "%s voa news"%(today)
         fullText = main_msg.as_string()
         # 用smtp发送邮件
-
         try:
-            n=0
-            while n  < len(receivers):
-                smtp_server.sendmail(sender,receivers[n:n+100], fullText)
-                n+=100
-                if n<len(receivers):
-                    time.sleep(3700)
+            smtp_server.sendmail(sender,receivers, fullText)
+        except:
+            pass
         finally:
             smtp_server.quit()
-
-if __name__=='__main__':
-    send_mail()

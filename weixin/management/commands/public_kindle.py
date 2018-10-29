@@ -5,6 +5,7 @@ import os,re
 import datetime
 import time
 import threading
+from weixin.models import Email
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -24,9 +25,12 @@ class Command(BaseCommand):
                     order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
                     doit(order_makemobi) # make mobi format ebook
                     time.sleep(15) # 休眠15秒
-                    #sendmail.send_mail('public') # send mail
-                    t1 = threading.Thread(target=sendmail.send_mail, args=('public',))
-                    t1.start()
+                    mail_list = [i.user_email for i in Email.objects.all()]
+                    n=0
+                    while n<len(mail_list):
+                        sendmail.send_mail(mail_list[n:n+100]) # send mail
+                        n+=100
+                        time.sleep(30) # 休眠30秒,保证每３０秒发送１封邮件，１封邮件收件人１００人
                     log += 'send mail public success!'
                 except Exception as e:#, Argment:
                     log += 'send mail fail! Exception:%s'%e
@@ -37,17 +41,7 @@ class Command(BaseCommand):
                 print(log)
                 f.write(log)
             tomorrow = (datetime.date.today()+datetime.timedelta(days=1))
-            remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
+            remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,12,10)-datetime.datetime.now()).total_seconds()
             timer = threading.Timer(remain_seconds,everyday_job) #每天执行一次
             timer.start()
-        #everyday_job()
-        today = datetime.date.today()
-        today_remain_seconds = (datetime.datetime(today.year,today.month,today.day,18,10)-datetime.datetime.now()).total_seconds()
-        if today_remain_seconds > 0:
-            start_timer = threading.Timer(today_remain_seconds,everyday_job)
-            start_timer.start()
-            return '%s hours latter will start job'%today_remain_seconds/3600
-        else:
-            start_timer = threading.Timer(today_remain_seconds + 24*3600,everyday_job)
-            start_timer.start()
-            return '%s hours latter will start job'%(today_remain_seconds/3600 +24)
+        everyday_job()
