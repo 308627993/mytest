@@ -24,22 +24,23 @@ class Command(BaseCommand):
                     order_makemobi = '%s/voa/kindlegen %s/voa/result/*.opf'%(path,path)
                     doit(order_makemobi) # make mobi format ebook
                     time.sleep(15) # 休眠15秒
-                    sendmail.send_mail('public') # send mail
+                    #sendmail.send_mail('public') # send mail
+                    t1 = threading.Thread(target=sendmail.send_mail, args=('public',))
+                    t1.start()
                     log += 'send mail public success!'
                 except Exception as e:#, Argment:
-                    log += 'send mail fail!'
+                    log += 'send mail fail! Exception:%s'%e
             else:
                 log += 'there is no html files,can not make mobi file'
             with open('%s/voa/log.txt'%path,'w') as f:
                 log += '---%s'%datetime.datetime.now()
                 print(log)
                 f.write(log)
-            #tomorrow = (datetime.date.today()+datetime.timedelta(days=1))
-            #remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
-            timer = threading.Timer(3600*24,everyday_job) #每天执行一次
+            tomorrow = (datetime.date.today()+datetime.timedelta(days=1))
+            remain_seconds = (datetime.datetime(tomorrow.year,tomorrow.month,tomorrow.day,18,10)-datetime.datetime.now()).total_seconds()
+            timer = threading.Timer(remain_seconds,everyday_job) #每天执行一次
             timer.start()
-        everyday_job()
-        '''
+        #everyday_job()
         today = datetime.date.today()
         today_remain_seconds = (datetime.datetime(today.year,today.month,today.day,18,10)-datetime.datetime.now()).total_seconds()
         if today_remain_seconds > 0:
@@ -50,4 +51,3 @@ class Command(BaseCommand):
             start_timer = threading.Timer(today_remain_seconds + 24*3600,everyday_job)
             start_timer.start()
             return '%s hours latter will start job'%(today_remain_seconds/3600 +24)
-        '''
