@@ -9,5 +9,5 @@ class Email(models.Model):
     user_id = models.CharField(max_length=30, blank=True, null=True, verbose_name='user_id')
     create_time = models.DateTimeField(editable=False,blank=True,null=True)
     def save(self,*args,**kwargs):
-        self.create_time = datetime.datetime.now()
+        self.create_time = datetime.datetime.now() + datetime.timedelta(hours=8)
         super(Email,self).save(*args,**kwargs)
