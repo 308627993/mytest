@@ -169,24 +169,39 @@ class GetData():
             f.write(requests.get(mp3_url).content)
     def get_page(self):
         for url in self.filter_links():
-        #    try:
-            html = get_data_from_url(url)
-            if self.filter_page(html):
-                title = html.xpath(self.page_title_xpath)[0].strip()
-                title = re.sub(r"[^a-zA-Z0-9_.' ]",'',title)
-                self.download_mp3(html,title)
-                story_body = html.xpath(self.page_body_xpath)[0]
-                self.remove_useless_node(story_body,self.page_useless_xpath)
-                context = self.download_format_image(story_body)
-                self.download_format_page(title,context)
-        #    except Exception as e:
-        #        print(e)
+            try:
+                html = get_data_from_url(url)
+                if self.filter_page(html):
+                    title = html.xpath(self.page_title_xpath)[0].strip()
+                    title = re.sub(r"[^a-zA-Z0-9_.' ]",'',title)
+                    self.download_mp3(html,title)
+                    story_body = html.xpath(self.page_body_xpath)[0]
+                    self.remove_useless_node(story_body,self.page_useless_xpath)
+                    context = self.download_format_image(story_body)
+                    self.download_format_page(title,context)
+            except Exception as e:
+                print(e)
         #        traceback.print_exc()
                 #sys.exit(1)
 def main():
-    voa_kvs_level_1 = {
-    'url':'https://learningenglish.voanews.com/p/5609.html',
-    'links_xpath':'//*[@class="media-block-wrap wg-area-2c"]/div/ul/li/div/div/a/@href',
+    titles = []
+    image_names = []
+    urls_list = [
+                ('https://learningenglish.voanews.com/z/952','Read Listen and Learn'),
+                ('https://learningenglish.voanews.com/z/3521','As It Is'),
+                ('https://learningenglish.voanews.com/z/986','Arts and Culture'),
+                ('https://learningenglish.voanews.com/z/1581','American Stories'),
+                ('https://learningenglish.voanews.com/z/955','Health and Lifestyle'),
+                ('https://learningenglish.voanews.com/z/979','U.S. History'),
+                ('https://learningenglish.voanews.com/z/1579','Science and Technology'),
+                ('https://learningenglish.voanews.com/z/4652',"What's Trending Today ?"),
+                ('https://learningenglish.voanews.com/z/987','Words and Their Stories'),
+                ('https://learningenglish.voanews.com/z/1689','Learning English Broadcast'),
+                ('https://learningenglish.voanews.com/z/5091',"America's Presidents"),
+                ]
+    voa_kvs = {
+    'url':'url',
+    'links_xpath':'//div/ul/li/div/a[@class="img-wrap"]/@href',
     'page_title_xpath':'//*[@id="content"]//h1/text()',
     'page_body_xpath':'//*[@id="article-content"]/div[1]',
     'page_image_xpath':'//img/@src|//div/@data-src',
@@ -194,16 +209,16 @@ def main():
     'page_mp3_xpath':'.//a[contains(@href,"mp3")]/@href',
     'subject':'level 1 voanews',
     }
-    #print(today)
-    voa_kvs_level_2={k:v for k,v in voa_kvs_level_1.items()}
-    voa_kvs_level_2['url'] = 'https://learningenglish.voanews.com/p/5610.html'
-    voa_kvs_level_2['subject'] = 'level 2 voanews'
-    voa_level_1 = GetData(voa_kvs_level_1)
-    voa_level_2 = GetData(voa_kvs_level_2)
-    voa_level_1.get_page()
-    voa_level_2.get_page()
-    titles = voa_level_1.titles + voa_level_2.titles
-    image_names = voa_level_1.image_names + voa_level_2.image_names
-    format_opf_ncx(titles,image_names,subject='voa news level 1 and 2')
+    get_data_objs = []
+    for url,subject in urls_list:
+        voa_kvs_dict = {k:v for k,v in voa_kvs.items()}
+        voa_kvs_dict['url'] = url
+        voa_kvs_dict['subject'] = subject
+        get_data_objs.append(GetData(voa_kvs_dict))
+    for obj in get_data_objs:
+        obj.get_page()
+        titles += obj.titles
+        image_names += obj.image_names
+    format_opf_ncx(titles,image_names,subject='VOA learning english')
 if __name__ == '__main__':
     main()
