@@ -219,6 +219,8 @@ def main():
         obj.get_page()
         titles += obj.titles
         image_names += obj.image_names
+    titles = list(set(titles))
+    image_names = list(set(image_names))
     format_opf_ncx(titles,image_names,subject='VOA learning english')
 if __name__ == '__main__':
     main()
