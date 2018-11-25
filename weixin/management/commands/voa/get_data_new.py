@@ -233,7 +233,7 @@ def main():
     format_opf_ncx(titles,image_names,subject='VOA learning english')
     # delete the mp3 which don't need
     mp3_files = glob.glob(os.path.join('%s/result'%(path),'*.mp3'))
-    html_titles =[i.replace('.html','') for i in glob.glob(os.path.join('%s/result'%(path),'*.html'))]
+    html_titles =[i.replace('.html','').replace(' ','_') for i in glob.glob(os.path.join('%s/result'%(path),'*.html'))]
     print('mp3_files :',mp3_files)
     useless_mp3_files = [i for i in mp3_files if i.replace('.mp3','') not in html_titles]
     print('useless_mp3_files :',useless_mp3_files)
