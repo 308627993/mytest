@@ -75,6 +75,8 @@ class GetData():
         self.subject = kvs['subject']
         self.titles = []
         self.image_names=[]
+        self.all_links = self.filter_links()
+
     def filter_links(self):
         '''
         根据url特点进行:
@@ -168,7 +170,7 @@ class GetData():
         with open('%s/result/%s.mp3'%(path,title),'wb') as f:
             f.write(requests.get(mp3_url).content)
     def get_page(self):
-        for url in self.filter_links():
+        for url in self.all_links:
             try:
                 html = get_data_from_url(url)
                 if self.filter_page(html):
@@ -215,12 +217,28 @@ def main():
         voa_kvs_dict['url'] = url
         voa_kvs_dict['subject'] = subject
         get_data_objs.append(GetData(voa_kvs_dict))
+    all_urls = []
     for obj in get_data_objs:
+        for link in obj.all_links:
+            if link not in all_urls:
+                all_urls.append(link)
+            else:
+                obj.all_links.remove(link)
+                print('remove :',link)
         obj.get_page()
         titles += obj.titles
         image_names += obj.image_names
     titles = list(set(titles))
     image_names = list(set(image_names))
     format_opf_ncx(titles,image_names,subject='VOA learning english')
+    # delete the mp3 which don't need
+    mp3_files = glob.glob(os.path.join('%s/result'%(path),'*.mp3'))
+    html_titles =[i.replace('.html','') for i in glob.glob(os.path.join('%s/result'%(path),'*.html'))]
+    print('mp3_files :',mp3_files)
+    useless_mp3_files = [i for i in mp3_files if i.replace('.mp3','') not in html_titles]
+    print('useless_mp3_files :',useless_mp3_files)
+    for file in useless_mp3_files:
+        os.remove(file)
+        print('remove',file)
 if __name__ == '__main__':
     main()
