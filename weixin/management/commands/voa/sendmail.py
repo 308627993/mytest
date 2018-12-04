@@ -17,7 +17,7 @@ def send_mail(receivers):
 def send_mobi_mp3(receivers,file_type):
     '''send mobi or mp3 files'''
     mailserver = 'box374.bluehost.com:465'
-    sender = 'ljy@luckylinjiayuan.cn'
+    sender = '%s@luckylinjiayuan.cn'%file_type
     today = datetime.date.today()
     smtp_server = smtplib.SMTP_SSL(mailserver)
     smtp_server.login(sender,'samsung@00')
