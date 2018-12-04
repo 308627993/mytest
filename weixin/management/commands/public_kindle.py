@@ -28,9 +28,9 @@ class Command(BaseCommand):
                     mail_list = [i.user_email for i in Email.objects.all()]
                     n=0
                     while n<len(mail_list):
-                        sendmail.send_mail(mail_list[n:n+100]) # send mail
-                        n+=100
-                        time.sleep(30) # 休眠30秒,保证每３０秒发送１封邮件，１封邮件收件人１００人
+                        sendmail.send_mail(mail_list[n:n+74]) # send mail
+                        n+=74
+                        time.sleep(3700) # 休眠30秒,保证每３０秒发送１封邮件，１封邮件收件人１００人
                     log += 'send mail public success!'
                 except Exception as e:#, Argment:
                     log += 'send mail fail! Exception:%s'%e
