@@ -9,6 +9,12 @@ import time
 
 path =os.path.dirname(os.path.abspath(__file__))
 def send_mail(receivers):
+    send_mobi_mp3(receivers,'mobi')
+    time.sleep(30)
+    send_mobi_mp3(receivers,'mp3')
+
+def send_mobi_mp3(receivers,file_type):
+    '''send mobi for mp3 files'''
     mailserver = 'box374.bluehost.com:465'
     sender = 'ljy@luckylinjiayuan.cn'
     today = datetime.date.today()
@@ -27,8 +33,21 @@ def send_mail(receivers):
         all_files = mobi_files + mp3_files
     else:
         all_files = []
-    if all_files:
-        for i in all_files:
+    if all_files and file_type == 'mobi':
+        # mobi file
+        for i in mobi_files:
+            f_path = os.path.join(dir,i)
+            with open(f_path,'rb') as f:
+                data = f.read()
+            file_msg = MIMEBase(maintype, subtype)
+            file_msg.set_payload(data)
+            email.encoders.encode_base64(file_msg)
+            basename = os.path.basename(i.strip())
+            file_msg.add_header('Content-Disposition','attachment', filename = basename)
+            main_msg.attach(file_msg)
+        # mp3 file
+    elif all_files and file_type == 'mp3':
+        for i in mp3_files:
             f_path = os.path.join(dir,i)
             with open(f_path,'rb') as f:
                 data = f.read()
