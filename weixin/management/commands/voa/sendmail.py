@@ -57,16 +57,16 @@ def send_mobi_mp3(receivers,file_type):
             basename = os.path.basename(i.strip())
             file_msg.add_header('Content-Disposition','attachment', filename = basename)
             main_msg.attach(file_msg)
-        # 设置根容器属性
-        main_msg['From'] = sender
-        main_msg['Subject'] = "%s voa news _%s"%(today,file_type)
-        fullText = main_msg.as_string()
-        # 用smtp发送邮件
-        try:
-            smtp_server.sendmail(sender,receivers, fullText)
-            print('send %s file success'%file_type)
-        except:
-            print('send %s file fail'%file_type)
-            pass
-        finally:
-            smtp_server.quit()
+    # 设置根容器属性
+    main_msg['From'] = sender
+    main_msg['Subject'] = "%s voa news _%s"%(today,file_type)
+    fullText = main_msg.as_string()
+    # 用smtp发送邮件
+    try:
+        smtp_server.sendmail(sender,receivers, fullText)
+        print('send %s file success'%file_type)
+    except:
+        print('send %s file fail'%file_type)
+        pass
+    finally:
+        smtp_server.quit()
