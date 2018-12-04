@@ -21,7 +21,7 @@ def send_mobi_mp3(receivers,file_type):
     smtp_server = smtplib.SMTP_SSL(mailserver)
     smtp_server.login(sender,'samsung@00')
     main_msg = MIMEMultipart()# 构造MIMEMultipart对象做为根容器
-    text_msg = MIMEText("%s voa news for learning english"%(today),'plain','utf-8')# 构造MIMEText对象做为邮件显示内容并附加到根容器
+    text_msg = MIMEText("%s voa news for learning english_%s"%(today,file_type),'plain','utf-8')# 构造MIMEText对象做为邮件显示内容并附加到根容器
     main_msg.attach(text_msg)
     # 构造MIMEBase对象做为文件附件内容并附加到根容器
     contype = 'application/octet-stream'
@@ -34,7 +34,6 @@ def send_mobi_mp3(receivers,file_type):
     else:
         all_files = []
     if all_files and file_type == 'mobi':
-        # mobi file
         for i in mobi_files:
             f_path = os.path.join(dir,i)
             with open(f_path,'rb') as f:
@@ -59,12 +58,14 @@ def send_mobi_mp3(receivers,file_type):
             main_msg.attach(file_msg)
         # 设置根容器属性
         main_msg['From'] = sender
-        main_msg['Subject'] = "%s voa news"%(today)
+        main_msg['Subject'] = "%s voa news _%s"%(today,file_type)
         fullText = main_msg.as_string()
         # 用smtp发送邮件
         try:
             smtp_server.sendmail(sender,receivers, fullText)
+            print('send %s file success'%file_type)
         except:
+            print('send %s file fail'%file_type)
             pass
         finally:
             smtp_server.quit()
