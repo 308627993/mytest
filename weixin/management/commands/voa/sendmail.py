@@ -9,12 +9,13 @@ import time
 
 path =os.path.dirname(os.path.abspath(__file__))
 def send_mail(receivers):
+    time.sleep(30)
     send_mobi_mp3(receivers,'mobi')
     time.sleep(30)
     send_mobi_mp3(receivers,'mp3')
 
 def send_mobi_mp3(receivers,file_type):
-    '''send mobi for mp3 files'''
+    '''send mobi or mp3 files'''
     mailserver = 'box374.bluehost.com:465'
     sender = 'ljy@luckylinjiayuan.cn'
     today = datetime.date.today()
