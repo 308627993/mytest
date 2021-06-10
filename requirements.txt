@@ -1,6 +1,6 @@
 certifi==2018.8.24
 chardet==3.0.4
-Django==1.11.15
+Django==2.2.24
 django-debug-toolbar==1.8
 gunicorn==19.4.5
 idna==2.7
